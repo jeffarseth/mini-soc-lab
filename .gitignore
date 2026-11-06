@@ -1,0 +1,19 @@
+# VM folders
+/UbuntuDesktop/
+/WazuhManager/
+/KaliLinux/
+/Windows11/
+
+# Source folder
+/src/
+
+# VMware files, in case a VM is created somewhere else
+*.vmdk
+*.vmx
+*.vmxf
+*.vmsd
+*.vmsn
+*.vmem
+*.nvram
+*.lck/
+*.log
