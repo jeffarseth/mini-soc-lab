@@ -7,6 +7,9 @@
 # Source folder
 /src/
 
+# Secrets
+/secrets/
+
 # VMware files, in case a VM is created somewhere else
 *.vmdk
 *.vmx
