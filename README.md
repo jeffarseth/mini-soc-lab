@@ -43,7 +43,7 @@ Network: VMware NAT (VMnet8), `192.168.121.0/24`, gateway `192.168.121.2`.
 ## Lab parts
 
 ### Part 1: Environment setup
-[`01-Host-Setup.docx`](Jeffar%20Documentation/01-Host-Setup.docx), [`02-Network-and-IP-Configuration.docx`](Jeffar%20Documentation/02-Network-and-IP-Configuration.docx)
+[`01-Host-Setup.md`](Jeffar%20Documentation/01-Host-Setup.md), [`02-Network-and-IP-Configuration.md`](Jeffar%20Documentation/02-Network-and-IP-Configuration.md)
 
 VMnet8 was set to `192.168.121.0/24` on the host. The four VMs were given static addresses on that network, and Windows11 was set to answer inbound ping. Connectivity was tested from Windows11 to every other VM and from each VM to the Internet.
 
@@ -52,7 +52,7 @@ VMnet8 was set to `192.168.121.0/24` on the host. The four VMs were given static
 **Verified:** All pings succeed and every VM reaches the Internet.
 
 ### Part 2: Sysmon on Windows11
-[`03-Sysmon.docx`](Jeffar%20Documentation/03-Sysmon.docx)
+[`03-Sysmon.md`](Jeffar%20Documentation/03-Sysmon.md)
 
 Sysmon was installed from Sysinternals with the SwiftOnSecurity configuration. From an elevated PowerShell session, `whoami`, `net user testuser /add` and `notepad.exe` were run and traced in the Sysmon Operational log.
 
@@ -61,7 +61,7 @@ Sysmon was installed from Sysinternals with the SwiftOnSecurity configuration. F
 **Verified:** Events appear in Event Viewer under Sysmon, Operational.
 
 ### Part 3: Suricata on UbuntuDesktop
-[`04-Suricata.docx`](Matthew%20Documentation/04-Suricata.docx)
+[`04-Suricata.md`](Matthew%20Documentation/04-Suricata.md)
 
 Suricata was installed on UbuntuDesktop and pointed at a custom rules file, `myCustom.rules`. The file holds four rules (SID 1000001 to 1000004): ICMP ping, TCP SYN scan, SSH brute force and FTP login attempt. Each was triggered from KaliLinux.
 
@@ -70,7 +70,7 @@ Suricata was installed on UbuntuDesktop and pointed at a custom rules file, `myC
 **Verified:** `suricata -T` loads the configuration, and every rule fires on its test.
 
 ### Part 4: Wazuh integration
-[`05-Wazuh-Installation.docx`](Jeffar%20Documentation/05-Wazuh-Installation.docx), [`06-Wazuh-Agents-Deployment.docx`](Jeffar%20Documentation/06-Wazuh-Agents-Deployment.docx), [`07-Wazuh-Logs-Integration.docx`](Jeffar%20Documentation/07-Wazuh-Logs-Integration.docx)
+[`05-Wazuh-Installation.md`](Jeffar%20Documentation/05-Wazuh-Installation.md), [`06-Wazuh-Agents-Deployment.md`](Jeffar%20Documentation/06-Wazuh-Agents-Deployment.md), [`07-Wazuh-Logs-Integration.md`](Jeffar%20Documentation/07-Wazuh-Logs-Integration.md)
 
 Wazuh was installed on WazuhManager, and agents were deployed on Windows11 and UbuntuDesktop from the dashboard. The Ubuntu agent collects Suricata's `eve.json`, and the Windows agent collects the `Microsoft-Windows-Sysmon/Operational` channel. A custom rule (ID `100100`) raises a level 5 alert when Sysmon records `notepad.exe` being created.
 
@@ -79,7 +79,7 @@ Wazuh was installed on WazuhManager, and agents were deployed on Windows11 and U
 **Verified:** Suricata alerts and Sysmon events appear in the Wazuh dashboard.
 
 ### Part 5: File integrity monitoring
-[`08-Configuring-FIM.docx`](Jeffar%20Documentation/08-Configuring-FIM.docx)
+[`08-Configuring-FIM.md`](Jeffar%20Documentation/08-Configuring-FIM.md)
 
 Real-time monitoring was enabled on `C:\Users\student\Desktop\sensitive` (Windows11) and `/home/student/Desktop/sensitive` (UbuntuDesktop). On each machine a file was created, modified and deleted.
 
