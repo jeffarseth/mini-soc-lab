@@ -81,7 +81,9 @@ style="width:7.38021in;height:1.00935in" />
 **From Kali Linux, generate test traffic that matches your chosen
 rules.**
 
-**TCP SYN Scan:** <img
+**TCP SYN Scan:**
+
+<img
 src="screenshots/13.png"
 style="width:6.5in;height:1.98611in" />
 
