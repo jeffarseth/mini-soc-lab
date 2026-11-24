@@ -18,6 +18,8 @@ which is `192.168.121.2`.
 
 <img
 src="screenshots/03.png"
-style="width:4.62in;height:4.05303in" /><img
+style="width:4.62in;height:4.05303in" />
+
+<img
 src="screenshots/04.png"
 style="width:4.06in;height:4.323in" />
