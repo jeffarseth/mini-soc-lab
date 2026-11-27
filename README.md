@@ -37,6 +37,8 @@ Network: VMware NAT (VMnet8), `192.168.121.0/24`, gateway `192.168.121.2`.
 - Wazuh Manager and dashboard on WazuhManager, with Wazuh agents on Windows11 and UbuntuDesktop.
 - Suricata alerts and Sysmon events forwarded to Wazuh, plus a custom rule that detects `notepad.exe` process creation.
 - Real-time file integrity monitoring on a `sensitive` folder on both endpoints.
+- Six attack and test scenarios (Nmap SYN scan, Hydra SSH brute force, account creation, `notepad.exe` and file changes on both endpoints), each traced to a Wazuh alert.
+- A Wazuh active response that blocks the attacker's IP with `firewall-drop` when SSH brute force rule `5763` fires.
 
 ---
 
@@ -86,6 +88,24 @@ Real-time monitoring was enabled on `C:\Users\student\Desktop\sensitive` (Window
 **Evidence:** The agent log line confirming real-time monitoring started (rule `6012`), and the FIM events in the dashboard.
 
 **Verified:** Creation, modification and deletion events appear for both endpoints.
+
+### Part 6: Attack simulation and validation
+[`09-Attack-Simulation-and-Validation.md`](Matthew%20Documentation/09-Attack-Simulation-and-Validation.md)
+
+Six tests were run and traced to Wazuh alerts: a TCP SYN scan (Nmap) and an SSH brute force (Hydra) from KaliLinux against UbuntuDesktop, `net user testuser /add` and `notepad.exe` on Windows11, and a file created, modified and deleted in the `sensitive` folder on each endpoint. Each test was mapped to MITRE ATT&CK where it applies.
+
+**Evidence:** The Wazuh alert for each test with the command that triggered it: Suricata alerts (rule `86601`), rules `92033` and `100100` on Windows11, and FIM rules `554`, `550` and `553` on both endpoints.
+
+**Verified:** Every test produces its expected alert in the dashboard.
+
+### Part 7: Wazuh active response
+[`10-Wazuh-Active-Response.md`](Matthew%20Documentation/10-Wazuh-Active-Response.md)
+
+An active response was added to `ossec.conf` on WazuhManager: when rule `5763` (SSH brute force) fires, the `firewall-drop` command blocks the source IP on the agent for 180 seconds. The manager was restarted for the change to take effect.
+
+**Evidence:** The rule `5763` alert, the `active-response` block in `ossec.conf`, and the manager running after the restart. On UbuntuDesktop, `iptables` lists a DROP rule for `192.168.121.25` and `active-responses.log` shows `firewall-drop` starting and ending. A ping from KaliLinux to `192.168.121.24` gets no replies.
+
+**Verified:** The attacker IP is blocked, and pings from KaliLinux to UbuntuDesktop show 100% packet loss.
 
 ---
 
